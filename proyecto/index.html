@@ -1,94 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Level-Up Gamer</title>
 
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Google Fonts: Inter (moderna, minimalista) + Orbitron para títulos -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Orbitron&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg-dark: #1E1F29;
-      --bg-navbar: #2C2F3A;
-      --color-accent: #61D4F3;
-      --color-hover: #7BE5FF;
-      --text-main: #F0F0F0;
-      --text-secondary: #B0B0B0;
+    :root{
+      --bg:#0b0f1a; /* dark background for gamer look */
+      --accent:#1E90FF;
+      --neon:#39FF14;
+      --card:#0f1724;
+      --muted:#d3d3d3;
     }
+    body{
+      background: linear-gradient(180deg, #05060a 0%, #0b1220 100%);
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      min-height:100vh;
+    }
+    h1,h2,h3,h4{ font-family: 'Orbitron', sans-serif; }
+    .navbar { background: linear-gradient(90deg, #0b1220, #0f1724); }
+    .btn-gamer{ background:var(--accent); color:var(--bg); font-weight:700; border-radius:10px; }
+    .card-product { background:var(--card); color:#fff; border:1px solid rgba(255,255,255,0.04); }
+    .star { color: gold; }
+    .badge-points { background: linear-gradient(90deg,#39ff14,#1effc4); color:#002; font-weight:700;}
+    .level-bubble { background: rgba(255,255,255,0.03); padding:6px 10px; border-radius:999px; color:var(--neon); font-weight:700; }
+    .muted { color:var(--muted); }
+    a.nav-link { color: #cfe8ff; }
+    .form-control-dark { background: #071427; color: #dbe9ff; border:1px solid rgba(255,255,255,0.03); }
+    footer { background: #06080f; color:#9fb7ff; }
 
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Inter', sans-serif;
-    }
-
-    h1, h2, h3 {
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    .navbar {
-      background-color: var(--bg-navbar);
-    }
-
-    .navbar-brand {
-      font-weight: 600;
-    }
-
-    .form-control::placeholder {
-      color: #ccc;
-    }
-
-    .btn-gamer {
-      background-color: var(--color-accent);
-      color: #1E1F29;
-      font-weight: 600;
-      border: none;
-    }
-
-    .btn-gamer:hover {
-      background-color: var(--color-hover);
-    }
-
-    .card-producto {
-      background-color: #2C2F3A;
-      color: var(--text-main);
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease;
-    }
-
-    .card-producto:hover {
-      transform: translateY(-5px);
-    }
-
-    .card-producto .card-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
-
-    .card-producto .precio {
-      color: var(--color-accent);
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    footer {
-      background-color: #1a1a1a;
-      color: #999;
-    }
+    /* small helpers */
+    .clickable { cursor:pointer; }
   </style>
 </head>
-
 <body>
 
-  <!-- 🔹 NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark py-3">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
       <a class="navbar-brand" href="#">Level-Up Gamer</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
@@ -96,91 +50,763 @@
       </button>
 
       <div class="collapse navbar-collapse" id="menu">
-        <ul class="navbar-nav me-auto ms-3">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" href="#catalogo">Catálogo</a></li>
           <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
-          <li class="nav-item"><a class="nav-link" href="#eventos">Eventos</a></li>
           <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
         </ul>
 
-        <!-- 🔍 Barra de búsqueda -->
-        <form class="d-flex" role="search">
-          <input class="form-control form-control-sm me-2 bg-dark text-white border-0" type="search" placeholder="Buscar..." aria-label="Buscar">
-          <button class="btn btn-sm btn-gamer" type="submit">Buscar</button>
-        </form>
+        <div class="d-flex align-items-center gap-2">
+          <div id="user-area" class="d-flex align-items-center gap-2">
+            <!-- Filled by JS -->
+          </div>
+          <button id="btnCart" class="btn btn-outline-light" title="Carrito">Carrito (<span id="cart-count">0</span>)</button>
+        </div>
       </div>
     </div>
   </nav>
 
-  <!-- 🔹 SECCIÓN INICIO -->
+  <!-- Hero / Inicio -->
   <section id="inicio" class="container py-5 text-center">
     <h1>Bienvenido a Level-Up Gamer</h1>
-    <p class="text-secondary">Tu tienda online gamer en Chile 🎮</p>
-    <button class="btn btn-gamer">Explorar Catálogo</button>
-  </section>
-
-  <!-- 🔹 CATÁLOGO DE PRODUCTOS -->
-  <section id="catalogo" class="container py-5">
-    <h2 class="mb-4">Catálogo de Productos</h2>
-    <div class="row g-4">
-
-      <!-- ✅ Tarjeta de producto -->
-      <div class="col-md-4">
-        <div class="card card-producto">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Producto Gamer">
-          <div class="card-body">
-            <h5 class="card-title">Nombre del Producto</h5>
-            <p class="precio">$XX.XXX</p>
-            <button class="btn btn-gamer w-100">🛒 Comprar</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Copia esta tarjeta para más productos -->
-      <div class="col-md-4">
-        <div class="card card-producto">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Producto Gamer">
-          <div class="card-body">
-            <h5 class="card-title">Nombre del Producto</h5>
-            <p class="precio">$XX.XXX</p>
-            <button class="btn btn-gamer w-100">🛒 Comprar</button>
-          </div>
-        </div>
-      </div>
-
+    <p class="lead muted">Tu tienda online gamer en Chile — demo funcional</p>
+    <div class="d-flex justify-content-center gap-3">
+      <a class="btn btn-gamer btn-lg" href="#catalogo">Explorar Catálogo</a>
+      <button class="btn btn-outline-light" id="open-register">Registrarse / Entrar</button>
     </div>
   </section>
 
-  <!-- 🔹 RESTO DE SECCIONES (Comunidad, Eventos, Blog, Contacto) -->
-  <section id="comunidad" class="container py-5">
+  <!-- Catalogo -->
+  <section id="catalogo" class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Catálogo de Productos</h2>
+      <div class="d-flex gap-2">
+        <input id="search-input" class="form-control form-control-dark" placeholder="Buscar producto..." />
+        <select id="sort-select" class="form-select form-control-dark">
+          <option value="relevance">Más relevantes</option>
+          <option value="price-asc">Precio: menor → mayor</option>
+          <option value="price-desc">Precio: mayor → menor</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <div class="card card-product p-3">
+          <h5>Filtros</h5>
+          <label class="form-label">Categoría</label>
+          <select id="category-filter" class="form-select form-control-dark mb-2">
+            <option value="all">Todas</option>
+          </select>
+
+          <label class="form-label">Precio (máx CLP)</label>
+          <input id="price-filter" type="range" min="0" max="2000000" step="1000" value="2000000" class="form-range">
+          <div class="d-flex justify-content-between"><small>0</small><small id="price-max-label">2.000.000</small></div>
+
+          <label class="form-label mt-2">Filtrar por</label>
+          <div class="form-check">
+            <input id="filter-in-stock" class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label">Solo disponibles</label>
+          </div>
+
+          <hr>
+          <h6>Tu perfil rápido</h6>
+          <div id="quick-profile" class="mb-2">
+            <!-- JS fill -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div id="product-grid" class="row g-3">
+          <!-- cards inserted by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comunidad / Blog / Simple placeholders -->
+  <section id="comunidad" class="container py-4">
     <h2>Comunidad Gamer</h2>
-    <p>Noticias, reseñas y novedades del mundo gamer.</p>
+    <p class="muted">Noticias, reseñas y novedades. Aquí puedes ver reseñas de productos y los niveles de los usuarios.</p>
+    <div id="community-area" class="row">
+      <div class="col-md-6">
+        <div class="card card-product p-3">
+          <h5>Top usuarios por puntos</h5>
+          <ul id="top-users" class="list-unstyled mb-0"></ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-product p-3">
+          <h5>Historial de compras (tu usuario)</h5>
+          <div id="purchase-history">Inicia sesión y compra para ver tu historial.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="eventos" class="container py-5">
-    <h2>Eventos Gamer</h2>
-    <p>Aquí irá un mapa con los próximos eventos gamer en Chile.</p>
-  </section>
-
-  <section id="blog" class="container py-5">
+  <section id="blog" class="container py-4">
     <h2>Blog & Guías</h2>
-    <p>Consejos, guías y contenido educativo para gamers.</p>
+    <p class="muted">Contenido demostrativo (este bloque es estático en la demo).</p>
+    <div class="card card-product p-3 mb-2"> <strong>Guía:</strong> ¿Cómo ganar puntos LevelUp? -> Compra productos, invita amigos con tu código de referido.</div>
   </section>
 
-  <section id="contacto" class="container py-5">
+  <!-- Contacto -->
+  <section id="contacto" class="container py-4">
     <h2>Contacto & Soporte Técnico</h2>
-    <p>¿Necesitas ayuda? Escríbenos por WhatsApp.</p>
-    <a href="https://wa.me/569XXXXXXXX" target="_blank" class="btn btn-success">💬 Ir a WhatsApp</a>
+    <p class="muted">¿Necesitas ayuda? Usa el chat de WhatsApp para soporte (redirecciona a WhatsApp).</p>
+    <a id="wa-link" href="https://wa.me/569XXXXXXXX" class="btn btn-success" target="_blank">💬 Ir a WhatsApp</a>
   </section>
 
-  <!-- 🔹 FOOTER -->
-  <footer class="text-center py-3">
-    <p>© 2025 Level-Up Gamer | Todos los derechos reservados</p>
+  <footer class="text-center py-3 mt-4">
+    <div class="container">
+      <div>© <span id="current-year"></span> Level-Up Gamer | Demo</div>
+    </div>
   </footer>
+
+  <!-- Modales -->
+  <!-- Registro / Login Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content card-product text-light">
+        <div class="modal-header">
+          <h5 class="modal-title">Registro / Iniciar sesión</h5>
+          <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <h6>Iniciar sesión</h6>
+              <div class="mb-2">
+                <input id="login-email" class="form-control form-control-dark" placeholder="Email">
+              </div>
+              <div class="mb-2">
+                <input id="login-password" type="password" class="form-control form-control-dark" placeholder="Contraseña">
+              </div>
+              <button class="btn btn-gamer mb-2" id="btn-login">Entrar</button>
+              <div id="login-msg" class="muted small"></div>
+            </div>
+
+            <div class="col-md-6">
+              <h6>Registrarse (solo +18)</h6>
+              <div class="mb-2">
+                <input id="reg-name" class="form-control form-control-dark" placeholder="Nombre completo">
+              </div>
+              <div class="mb-2">
+                <input id="reg-email" class="form-control form-control-dark" placeholder="Email">
+              </div>
+              <div class="mb-2">
+                <input id="reg-password" type="password" class="form-control form-control-dark" placeholder="Contraseña">
+              </div>
+              <div class="mb-2">
+                <label class="form-label small muted">Fecha de nacimiento</label>
+                <input id="reg-birth" type="date" class="form-control form-control-dark">
+              </div>
+              <div class="mb-2">
+                <input id="reg-ref" class="form-control form-control-dark" placeholder="Código de referido (opcional)">
+              </div>
+              <button class="btn btn-outline-light" id="btn-register">Crear cuenta</button>
+              <div id="reg-msg" class="muted small mt-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="modal fade" id="cartModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content card-product text-light">
+        <div class="modal-header">
+          <h5 class="modal-title">Tu Carrito</h5>
+          <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="cart-items"></div>
+          <hr>
+          <div id="cart-summary" class="text-end"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-light" data-bs-dismiss="modal">Seguir comprando</button>
+          <button id="checkout-btn" class="btn btn-gamer">Proceder a pagar (Demo)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product details modal (reviews) -->
+  <div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content card-product text-light">
+        <div class="modal-header">
+          <h5 id="productModalTitle" class="modal-title"></h5>
+          <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body row">
+          <div class="col-md-5">
+            <img id="productModalImg" src="" class="img-fluid rounded" alt="producto">
+            <div class="mt-3"><strong>Precio:</strong> <span id="productModalPrice"></span></div>
+            <div class="mt-2"><strong>Categoría:</strong> <span id="productModalCategory"></span></div>
+            <div class="mt-2"><strong>Stock:</strong> <span id="productModalStock"></span></div>
+            <div class="mt-3">
+              <button id="pm-add-to-cart" class="btn btn-gamer">Agregar al carrito</button>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <h6>Descripción</h6>
+            <p id="productModalDesc"></p>
+            <hr>
+            <h6>Reseñas</h6>
+            <div id="product-reviews"></div>
+            <div id="leave-review-area" class="mt-3">
+              <!-- Review form if user eligible -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- App Script -->
+  <script>
+  (function(){
+    // ---------- Data inicial (según PDF) ----------
+    const PRODUCTS = [
+      { code:"JM001", category:"Juegos de Mesa", name:"Catan", price:29990, desc:"Juego de estrategia 3-4 jugadores.", stock:10, img:"https://via.placeholder.com/400x250?text=Catan" },
+      { code:"JM002", category:"Juegos de Mesa", name:"Carcassonne", price:24990, desc:"Juego de colocación de fichas 2-5 jugadores.", stock:6, img:"https://via.placeholder.com/400x250?text=Carcassonne" },
+      { code:"AC001", category:"Accesorios", name:"Controlador Inalámbrico Xbox Series X", price:59990, desc:"Control inalámbrico compatible con Xbox y PC.", stock:5, img:"https://via.placeholder.com/400x250?text=Control+Xbox" },
+      { code:"AC002", category:"Accesorios", name:"Auriculares HyperX Cloud II", price:79990, desc:"Auriculares gaming con micrófono desmontable.", stock:8, img:"https://via.placeholder.com/400x250?text=HyperX+Cloud+II" },
+      { code:"CO001", category:"Consolas", name:"PlayStation 5", price:549990, desc:"Consola Sony PS5.", stock:3, img:"https://via.placeholder.com/400x250?text=PS5" },
+      { code:"CG001", category:"Computadores Gamers", name:"PC Gamer ASUS ROG Strix", price:1299990, desc:"PC potente para gaming.", stock:2, img:"https://via.placeholder.com/400x250?text=ASUS+ROG" },
+      { code:"SG001", category:"Sillas Gamers", name:"Silla Secretlab Titan", price:349990, desc:"Silla ergonómica para largas sesiones.", stock:7, img:"https://via.placeholder.com/400x250?text=Secretlab+Titan" },
+      { code:"MS001", category:"Mouse", name:"Logitech G502 HERO", price:49990, desc:"Mouse con sensor de alta precisión.", stock:12, img:"https://via.placeholder.com/400x250?text=G502" },
+      { code:"MP001", category:"Mousepad", name:"Razer Goliathus Extended Chroma", price:29990, desc:"Mousepad con iluminación RGB.", stock:10, img:"https://via.placeholder.com/400x250?text=Razer+Goliathus" },
+      { code:"PP001", category:"Poleras Personalizadas", name:"Polera Level-Up", price:14990, desc:"Polera personalizada 'Level-Up'.", stock:20, img:"https://via.placeholder.com/400x250?text=Polera+LevelUp" }
+    ];
+
+    // ---------- Utilidades ----------
+    function formatCLP(n){ return n.toLocaleString('es-CL', {style:'currency', currency:'CLP'}); }
+    function uid(prefix='id'){ return prefix + '_' + Math.random().toString(36).slice(2,10); }
+    function todayYear(){ return new Date().getFullYear(); }
+
+    // ---------- LocalStorage helpers ----------
+    function dbGet(key, def=null){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):def; }catch(e){return def;} }
+    function dbSet(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+    // Initialize storage if empty
+    if(!dbGet('lug_products')) dbSet('lug_products', PRODUCTS);
+    if(!dbGet('lug_users')) dbSet('lug_users', []); // {id,name,email,password,birth,points,refCode,refBy,purchases:[],isDuoc}
+    if(!dbGet('lug_cart')) dbSet('lug_cart', []); // {userId, items:[{code,qty,priceAt}] } or for guest userId=null
+    if(!dbGet('lug_reviews')) dbSet('lug_reviews', []); // {id,productCode,userId,rating,text,date}
+    if(!dbGet('lug_current')) dbSet('lug_current', {userId:null}); // current session
+
+    // ---------- App state ----------
+    let PRODUCTS_DB = dbGet('lug_products');
+    let USERS_DB = dbGet('lug_users');
+    let REVIEWS_DB = dbGet('lug_reviews');
+    let CURRENT = dbGet('lug_current');
+    let CART = dbGet('lug_cart');
+
+    // ---------- DOM refs ----------
+    const productGrid = document.getElementById('product-grid');
+    const categoryFilter = document.getElementById('category-filter');
+    const priceFilter = document.getElementById('price-filter');
+    const priceMaxLabel = document.getElementById('price-max-label');
+    const filterInStock = document.getElementById('filter-in-stock');
+    const searchInput = document.getElementById('search-input');
+    const sortSelect = document.getElementById('sort-select');
+    const cartCount = document.getElementById('cart-count');
+    const btnCart = document.getElementById('btnCart');
+    const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+    const productModal = new bootstrap.Modal(document.getElementById('productModal'));
+    const currentYearEl = document.getElementById('current-year');
+    currentYearEl.textContent = todayYear();
+
+    // ---------- UI Init ----------
+    function initUI(){
+      populateCategories();
+      renderProducts();
+      updateCartBadge();
+      renderUserArea();
+      renderQuickProfile();
+      renderTopUsers();
+      document.getElementById('wa-link').href = 'https://wa.me/569XXXXXXXX'; // replace if needed
+    }
+
+    // categories
+    function populateCategories(){
+      const cats = Array.from(new Set(PRODUCTS_DB.map(p=>p.category)));
+      categoryFilter.innerHTML = '<option value="all">Todas</option>' + cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+      // price range max
+      const maxPrice = Math.max(...PRODUCTS_DB.map(p=>p.price));
+      priceFilter.max = Math.ceil(maxPrice/1000)*1000;
+      priceFilter.value = priceFilter.max;
+      priceMaxLabel.textContent = priceFilter.value.toLocaleString('es-CL');
+    }
+
+    // Product rendering with filters
+    function renderProducts(){
+      const q = searchInput.value.trim().toLowerCase();
+      const cat = categoryFilter.value;
+      const maxPrice = Number(priceFilter.value);
+      const onlyStock = filterInStock.checked;
+      let results = PRODUCTS_DB.filter(p=>{
+        if(cat !== 'all' && p.category !== cat) return false;
+        if(p.price > maxPrice) return false;
+        if(onlyStock && (!p.stock || p.stock<=0)) return false;
+        if(q && !(p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.code.toLowerCase().includes(q))) return false;
+        return true;
+      });
+      // sort
+      const sort = sortSelect.value;
+      if(sort==='price-asc') results.sort((a,b)=>a.price-b.price);
+      if(sort==='price-desc') results.sort((a,b)=>b.price-a.price);
+
+      productGrid.innerHTML = results.map(p=>productCardHtml(p)).join('');
+      // attach buttons
+      document.querySelectorAll('.btn-add').forEach(btn=>{
+        btn.addEventListener('click', e=>{
+          const code = e.currentTarget.dataset.code; addToCart(code,1); });
+      });
+      document.querySelectorAll('.product-open').forEach(btn=>{
+        btn.addEventListener('click', e=>{ openProductModal(e.currentTarget.dataset.code); });
+      });
+    }
+
+    function productCardHtml(p){
+      // average rating
+      const reviews = REVIEWS_DB.filter(r=>r.productCode === p.code);
+      const avg = reviews.length? (reviews.reduce((s,r)=>s+r.rating,0)/reviews.length).toFixed(1) : '—';
+      return `
+        <div class="col-md-4">
+          <div class="card card-product h-100 p-2">
+            <img src="${p.img}" class="img-fluid rounded" alt="${p.name}">
+            <div class="mt-2 d-flex justify-content-between align-items-start">
+              <div>
+                <h5 class="mb-1">${p.name}</h5>
+                <div class="muted small">${p.category} • ${p.code}</div>
+              </div>
+              <div class="text-end">
+                <div class="h6">${formatCLP(p.price)}</div>
+                <div class="muted small">${p.stock>0? 'En stock' : 'Agotado'}</div>
+              </div>
+            </div>
+            <p class="mt-2">${p.desc}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="small muted">⭐ ${avg} (${reviews.length})</div>
+              <div>
+                <button class="btn btn-sm btn-outline-light product-open" data-code="${p.code}">Ver</button>
+                <button class="btn btn-sm btn-gamer btn-add" data-code="${p.code}" ${p.stock<=0? 'disabled':''}>Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ---------- Cart ----------
+    function getCartForCurrent(){
+      // we'll keep single global cart for demo. CART is array of items for guest or keyed by user
+      let cart = dbGet('lug_cart') || [];
+      // choose current cart (we'll use single cart object with items)
+      // Keep simple: array of items {code,qty}
+      if(!cart || !Array.isArray(cart)) cart = [];
+      return cart;
+    }
+    function saveCart(cart){
+      dbSet('lug_cart', cart);
+      CART = cart;
+      updateCartBadge();
+    }
+
+    function addToCart(code, qty=1){
+      const product = PRODUCTS_DB.find(p=>p.code===code);
+      if(!product) return alert('Producto no encontrado');
+      let cart = getCartForCurrent();
+      const existing = cart.find(i=>i.code===code);
+      if(existing){
+        existing.qty = Math.min(product.stock, existing.qty + qty);
+      } else {
+        cart.push({ code: code, qty: Math.min(product.stock, qty), priceAt: product.price });
+      }
+      saveCart(cart);
+      renderCartModal();
+      alert('Producto agregado al carrito');
+    }
+
+    function updateCartBadge(){
+      const cart = getCartForCurrent();
+      const totalQty = cart.reduce((s,i)=>s+i.qty,0);
+      cartCount.textContent = totalQty;
+    }
+
+    btnCart.addEventListener('click', ()=>{
+      renderCartModal();
+      cartModal.show();
+    });
+
+    function renderCartModal(){
+      const cart = getCartForCurrent();
+      const el = document.getElementById('cart-items');
+      if(cart.length===0){
+        el.innerHTML = '<div class="muted">Tu carrito está vacío.</div>';
+        document.getElementById('cart-summary').innerHTML = '';
+        return;
+      }
+      let html = '<div class="table-responsive"><table class="table table-dark table-striped"><thead><tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th></th></tr></thead><tbody>';
+      let subtotal = 0;
+      cart.forEach(item=>{
+        const p = PRODUCTS_DB.find(pp=>pp.code===item.code);
+        const st = (item.qty * (item.priceAt || p.price));
+        subtotal += st;
+        html += `<tr data-code="${item.code}"><td>${p.name}</td><td>${formatCLP(item.priceAt || p.price)}</td><td><input class="form-control form-control-sm qty-input" style="width:80px" data-code="${item.code}" value="${item.qty}" type="number" min="1" max="${p.stock}"></td><td>${formatCLP(st)}</td><td><button class="btn btn-sm btn-danger remove-item" data-code="${item.code}">Eliminar</button></td></tr>`;
+      });
+      html += '</tbody></table></div>';
+      el.innerHTML = html;
+
+      // summary: apply duoc discount if user has duoc
+      let discount = 0;
+      const curUser = getCurrentUser();
+      const isDuoc = curUser && curUser.isDuoc;
+      if(isDuoc) discount = Math.round(subtotal * 0.20);
+      const total = subtotal - discount;
+
+      document.getElementById('cart-summary').innerHTML = `<div>Subtotal: <strong>${formatCLP(subtotal)}</strong></div>
+        <div>Descuento Duoc 20%: <strong>${formatCLP(discount)}</strong></div>
+        <div class="mt-2 h5">Total: <strong>${formatCLP(total)}</strong></div>`;
+
+      // attach listeners
+      document.querySelectorAll('.remove-item').forEach(btn=> btn.addEventListener('click', e=>{
+        const code = e.currentTarget.dataset.code;
+        removeFromCart(code);
+      }));
+      document.querySelectorAll('.qty-input').forEach(inp=>{
+        inp.addEventListener('change', e=>{
+          const code = e.currentTarget.dataset.code;
+          let v = Number(e.currentTarget.value);
+          if(v<1) v=1;
+          const p = PRODUCTS_DB.find(pp=>pp.code===code);
+          if(v>p.stock){ v=p.stock; e.currentTarget.value = v; alert('No hay tanto stock'); }
+          updateCartQty(code, v);
+        });
+      });
+    }
+
+    function removeFromCart(code){
+      let cart = getCartForCurrent();
+      cart = cart.filter(i=>i.code!==code);
+      saveCart(cart);
+      renderCartModal();
+    }
+    function updateCartQty(code, qty){
+      let cart = getCartForCurrent();
+      const it = cart.find(i=>i.code===code);
+      if(it){ it.qty = qty; saveCart(cart); renderCartModal(); }
+    }
+
+    // Checkout (simulado)
+    document.getElementById('checkout-btn').addEventListener('click', ()=>{
+      const current = getCurrentUser();
+      if(!current) return alert('Debes iniciar sesión para comprar — demo requiere usuario.');
+      const cart = getCartForCurrent();
+      if(cart.length===0) return alert('Carrito vacío');
+      // reduce stock, save purchase in user's purchases, award points
+      let subtotal = 0;
+      cart.forEach(it=>{
+        const p = PRODUCTS_DB.find(pp=>pp.code===it.code);
+        subtotal += it.qty * (it.priceAt || p.price);
+        p.stock = Math.max(0, p.stock - it.qty);
+      });
+      // calculate discount
+      const isDuoc = current.isDuoc;
+      const discount = isDuoc ? Math.round(subtotal * 0.20) : 0;
+      const total = subtotal - discount;
+      // award points: 1 punto por cada 1000 CLP gastado (redondeo)
+      const pointsEarned = Math.floor(total / 1000);
+      // store purchase
+      const purchase = { id: uid('pur'), date: new Date().toISOString(), items: cart, subtotal, discount, total, points: pointsEarned };
+      // save to user
+      const users = dbGet('lug_users');
+      const uidx = users.findIndex(u=>u.id===current.userId);
+      if(uidx>=0){
+        users[uidx].purchases = users[uidx].purchases || [];
+        users[uidx].purchases.push(purchase);
+        users[uidx].points = (users[uidx].points||0) + pointsEarned;
+        dbSet('lug_users', users);
+      }
+      // clear cart
+      saveCart([]);
+      // update products DB (stocks)
+      dbSet('lug_products', PRODUCTS_DB);
+      alert(`Compra realizada (demo). Total ${formatCLP(total)}. Ganaste ${pointsEarned} puntos LevelUp.`);
+      // refresh UI
+      PRODUCTS_DB = dbGet('lug_products');
+      USERS_DB = dbGet('lug_users');
+      renderProducts();
+      renderUserArea();
+      renderTopUsers();
+      renderQuickProfile();
+      renderPurchaseHistory();
+      cartModal.hide();
+    });
+
+    // ---------- Auth / Register ----------
+    document.getElementById('open-register').addEventListener('click', ()=> authModal.show());
+
+    document.getElementById('btn-register').addEventListener('click', ()=>{
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim().toLowerCase();
+      const password = document.getElementById('reg-password').value;
+      const birth = document.getElementById('reg-birth').value;
+      const ref = document.getElementById('reg-ref').value.trim();
+
+      if(!name||!email||!password||!birth) return document.getElementById('reg-msg').textContent = 'Completa todos los campos';
+      // age check
+      const bdate = new Date(birth);
+      const age = getAge(bdate);
+      if(age < 18) return document.getElementById('reg-msg').textContent = 'Debes ser mayor de 18 años para registrarte.';
+      // unique email
+      let users = dbGet('lug_users')||[];
+      if(users.some(u=>u.email===email)) return document.getElementById('reg-msg').textContent = 'Ese email ya está registrado.';
+      // Duoc email check
+      const isDuoc = email.includes('@duoc') || email.endsWith('.duoc.cl') || email.includes('@duocuc'); // basic detection
+      const newUser = {
+        id: uid('u'),
+        name, email, password, birth: bdate.toISOString(),
+        points: 0,
+        refCode: generateRefCode(),
+        refBy: ref || null,
+        purchases: [],
+        isDuoc: !!isDuoc
+      };
+      users.push(newUser);
+      // if used a valid ref code, give points to the referer
+      if(ref){
+        const idx = users.findIndex(u=>u.refCode === ref);
+        if(idx>=0){
+          users[idx].points = (users[idx].points||0) + 50; // example: 50 puntos por referido
+          newUser.refBy = ref;
+          newUser.points = (newUser.points||0) + 25; // referido también obtiene 25 pts
+        }
+      }
+      dbSet('lug_users', users);
+      // set current session
+      dbSet('lug_current', { userId: newUser.id });
+      CURRENT = dbGet('lug_current');
+      USERS_DB = dbGet('lug_users');
+      document.getElementById('reg-msg').textContent = 'Cuenta creada. Has iniciado sesión.';
+      renderUserArea();
+      renderQuickProfile();
+      renderTopUsers();
+      setTimeout(()=> authModal.hide(), 800);
+    });
+
+    document.getElementById('btn-login').addEventListener('click', ()=>{
+      const email = document.getElementById('login-email').value.trim().toLowerCase();
+      const pwd = document.getElementById('login-password').value;
+      const users = dbGet('lug_users')||[];
+      const u = users.find(x=>x.email===email && x.password===pwd);
+      if(!u) return document.getElementById('login-msg').textContent = 'Credenciales incorrectas';
+      dbSet('lug_current', { userId: u.id });
+      CURRENT = dbGet('lug_current');
+      document.getElementById('login-msg').textContent = 'Sesión iniciada';
+      renderUserArea();
+      renderQuickProfile();
+      renderPurchaseHistory();
+      setTimeout(()=> authModal.hide(), 700);
+    });
+
+    function getAge(bdate){
+      const diff = Date.now() - bdate.getTime();
+      const ageDt = new Date(diff);
+      return Math.abs(ageDt.getUTCFullYear() - 1970);
+    }
+    function generateRefCode(){
+      return Math.random().toString(36).slice(2,8).toUpperCase();
+    }
+
+    function getCurrentUser(){
+      const cur = dbGet('lug_current') || {userId:null};
+      if(!cur.userId) return null;
+      const users = dbGet('lug_users') || [];
+      return users.find(u=>u.id===cur.userId) || null;
+    }
+
+    // Render user area in navbar
+    function renderUserArea(){
+      const ua = document.getElementById('user-area');
+      ua.innerHTML = '';
+      const cur = getCurrentUser();
+      if(cur){
+        const nameBadge = document.createElement('div');
+        nameBadge.className = 'd-flex align-items-center gap-2';
+        nameBadge.innerHTML = `<div class="level-bubble">Nivel: ${getLevel(cur.points)}</div><div class="small muted">${cur.name}</div> <button id="btn-profile" class="btn btn-sm btn-outline-light">Perfil</button> <button id="btn-logout" class="btn btn-sm btn-danger">Salir</button>`;
+        ua.appendChild(nameBadge);
+
+        document.getElementById('btn-logout').addEventListener('click', ()=>{
+          dbSet('lug_current', { userId: null });
+          CURRENT = dbGet('lug_current');
+          renderUserArea();
+          renderQuickProfile();
+          renderPurchaseHistory();
+        });
+        document.getElementById('btn-profile').addEventListener('click', ()=> openProfile());
+      } else {
+        const logBtn = document.createElement('div');
+        logBtn.innerHTML = '<button class="btn btn-outline-light btn-sm" id="open-auth">Entrar / Registrarse</button>';
+        ua.appendChild(logBtn);
+        document.getElementById('open-auth').addEventListener('click', ()=> authModal.show());
+      }
+    }
+
+    function getLevel(points){
+      if(!points) return 1;
+      if(points < 100) return 1;
+      if(points < 500) return 2;
+      if(points < 1000) return 3;
+      return 4;
+    }
+
+    // Quick profile in sidebar
+    function renderQuickProfile(){
+      const el = document.getElementById('quick-profile');
+      const cur = getCurrentUser();
+      if(!cur){
+        el.innerHTML = `<div class="muted small">No has iniciado sesión.</div><div class="mt-2"><button class="btn btn-sm btn-outline-light" onclick="(function(){document.querySelector('#open-register').click();})()">Inicia sesión</button></div>`;
+        return;
+      }
+      el.innerHTML = `<div><strong>${cur.name}</strong></div>
+        <div class="muted small">${cur.email}</div>
+        <div class="mt-1"><span class="badge badge-points">${cur.points || 0} pts</span> <span class="ms-2 muted small">Código referido: <strong>${cur.refCode}</strong></span></div>`;
+    }
+
+    // Profile modal replacement: simple profile editor using prompt for demo
+    function openProfile(){
+      const cur = getCurrentUser();
+      if(!cur) return alert('No has iniciado sesión.');
+      const users = dbGet('lug_users');
+      const idx = users.findIndex(u=>u.id===cur.id);
+      const newName = prompt('Nombre:', cur.name) || cur.name;
+      const newEmail = prompt('Email:', cur.email) || cur.email;
+      // cannot change birth easily here; allow toggling
+      users[idx].name = newName;
+      users[idx].email = newEmail;
+      dbSet('lug_users', users);
+      renderUserArea();
+      renderQuickProfile();
+      alert('Perfil actualizado (demo).');
+    }
+
+    // Top users
+    function renderTopUsers(){
+      const el = document.getElementById('top-users');
+      const users = dbGet('lug_users') || [];
+      const sorted = users.slice().sort((a,b)=> (b.points||0)-(a.points||0)).slice(0,5);
+      el.innerHTML = sorted.map(u=>`<li class="mb-1">${u.name} — <span class="badge badge-points">${u.points||0} pts</span> <small class="muted">Nivel ${getLevel(u.points||0)}</small></li>`).join('');
+    }
+
+    // Purchase history for current user
+    function renderPurchaseHistory(){
+      const cur = getCurrentUser();
+      const el = document.getElementById('purchase-history');
+      if(!cur) { el.innerHTML = 'Inicia sesión y compra para ver tu historial.'; return; }
+      const users = dbGet('lug_users');
+      const u = users.find(x=>x.id===cur.id);
+      if(!u || !u.purchases || u.purchases.length===0) { el.innerHTML = 'Aún no tienes compras.'; return; }
+      el.innerHTML = u.purchases.map(p=>`<div class="mb-2"><strong>${new Date(p.date).toLocaleString()}</strong> — Total: ${formatCLP(p.total)} — Puntos: ${p.points}</div>`).join('');
+    }
+
+    // ---------- Product Modal + Reviews ----------
+    function openProductModal(code){
+      const p = PRODUCTS_DB.find(x=>x.code===code);
+      if(!p) return;
+      document.getElementById('productModalTitle').textContent = `${p.name} • ${p.code}`;
+      document.getElementById('productModalImg').src = p.img;
+      document.getElementById('productModalPrice').textContent = formatCLP(p.price);
+      document.getElementById('productModalCategory').textContent = p.category;
+      document.getElementById('productModalStock').textContent = p.stock>0? p.stock : 'Agotado';
+      document.getElementById('productModalDesc').textContent = p.desc;
+      document.getElementById('pm-add-to-cart').dataset.code = p.code;
+      document.getElementById('pm-add-to-cart').onclick = ()=>{ addToCart(p.code,1); productModal.hide(); };
+
+      // render reviews
+      const reviews = (dbGet('lug_reviews') || []).filter(r=>r.productCode === p.code).sort((a,b)=>new Date(b.date)-new Date(a.date));
+      const revHtml = reviews.length ? reviews.map(r=> {
+        const user = (dbGet('lug_users')||[]).find(u=>u.id===r.userId) || {name:'Anon'};
+        return `<div class="mb-2 p-2" style="background:rgba(255,255,255,0.02); border-radius:6px;">
+          <div><strong>${user.name}</strong> <small class="muted">• ${new Date(r.date).toLocaleString()}</small></div>
+          <div> ${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)} </div>
+          <div class="mt-1">${r.text}</div>
+        </div>`;
+      }).join('') : '<div class="muted">Aún no hay reseñas para este producto.</div>';
+      document.getElementById('product-reviews').innerHTML = revHtml;
+
+      // leave review area: only allow if logged and has purchased this product
+      const cur = getCurrentUser();
+      const leave = document.getElementById('leave-review-area');
+      leave.innerHTML = '';
+      if(!cur){
+        leave.innerHTML = '<div class="muted">Inicia sesión para dejar una reseña.</div>';
+      } else {
+        const users = dbGet('lug_users')||[];
+        const u = users.find(uu=>uu.id===cur.id);
+        const hasBought = (u && u.purchases && u.purchases.some(pur=> pur.items && pur.items.some(it=> it.code === code)));
+        if(!hasBought){
+          leave.innerHTML = '<div class="muted">Solo puedes reseñar productos que has comprado.</div>';
+        } else {
+          leave.innerHTML = `
+            <div><label class="form-label">Tu calificación</label>
+            <select id="review-rating" class="form-select form-control-dark mb-2">
+              <option value="5">5 - Excelente</option>
+              <option value="4">4 - Muy bueno</option>
+              <option value="3">3 - Bueno</option>
+              <option value="2">2 - Regular</option>
+              <option value="1">1 - Malo</option>
+            </select></div>
+            <div><textarea id="review-text" class="form-control form-control-dark" rows="3" placeholder="Escribe tu reseña..."></textarea></div>
+            <div class="mt-2"><button id="send-review" class="btn btn-gamer">Enviar reseña</button></div>`;
+          document.getElementById('send-review').addEventListener('click', ()=>{
+            const rating = Number(document.getElementById('review-rating').value);
+            const text = document.getElementById('review-text').value.trim();
+            if(!text) return alert('Escribe algo de texto para la reseña');
+            const newRev = { id: uid('rev'), productCode: code, userId: cur.id, rating, text, date: new Date().toISOString() };
+            const revs = dbGet('lug_reviews') || [];
+            revs.push(newRev);
+            dbSet('lug_reviews', revs);
+            REVIEWS_DB = revs;
+            alert('Reseña publicada');
+            openProductModal(code);
+          });
+        }
+      }
+
+      productModal.show();
+    }
+
+    // ---------- Reviews DB already stored in localStorage ----------
+
+    // ---------- Events listeners ----------
+    searchInput.addEventListener('input', ()=> renderProducts());
+    categoryFilter.addEventListener('change', ()=> renderProducts());
+    priceFilter.addEventListener('input', ()=> { priceMaxLabel.textContent = Number(priceFilter.value).toLocaleString('es-CL'); renderProducts(); });
+    filterInStock.addEventListener('change', ()=> renderProducts());
+    sortSelect.addEventListener('change', ()=> renderProducts());
+
+    // ----------------- Init app -----------------
+    initUI();
+    renderPurchaseHistory();
+
+    // expose some functions for inline triggers (small hack)
+    window.openProductModal = openProductModal;
+    window.addToCart = addToCart;
+
+  })();
+  </script>
 </body>
 </html>

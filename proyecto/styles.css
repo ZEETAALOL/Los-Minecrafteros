@@ -1,0 +1,19 @@
+:root{
+  --bg:#0b0f1a;
+  --accent:#1E90FF;
+  --neon:#39FF14;
+  --card:#0f1724;
+  --muted:#d3d3d3;
+}
+body{
+  background: linear-gradient(180deg, #05060a 0%, #0b1220 100%);
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  min-height:100vh;
+}
+h1,h2,h3,h4{ font-family: 'Orbitron', sans-serif; }
+.navbar { background: linear-gradient(90deg, #0b1220, #0f1724); }
+.btn-gamer{ background:var(--accent); color:var(--bg); font-weight:700; border-radius:10px; }
+.card-product { background:var(--card); color:#fff; border:1px solid rgba(255,255,255,0.04); }
+.star { color: gold; }
+footer { background:#06080f; color:#9fb7ff; }
