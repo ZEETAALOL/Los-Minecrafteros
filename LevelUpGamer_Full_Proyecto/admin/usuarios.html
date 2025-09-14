@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Usuarios · Level-Up Gamer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="admin">
+<header class="admin-header">
+  <h1>Usuarios</h1>
+  <nav>
+    <a href="index.html">Admin Home</a>
+    <a href="productos.html">Productos</a>
+    <a href="../index.html">Tienda</a>
+  </nav>
+</header>
+<main class="section">
+  <form id="formUsuario" class="form-card">
+    <h2>Nuevo / Editar Usuario</h2>
+    <input id="uRun" placeholder="RUN sin puntos ni guion, ej: 19011022K" required>
+    <input id="uNombre" placeholder="Nombre (max 50)" maxlength="50" required>
+    <input id="uApellidos" placeholder="Apellidos (max 100)" maxlength="100" required>
+    <input id="uCorreo" type="email" placeholder="Correo permitido" required maxlength="100">
+    <input id="uPass" type="password" placeholder="Contraseña (4-10)" required>
+    <input id="uDireccion" placeholder="Dirección (max 300)" maxlength="300" required>
+    <select id="uTipo" required>
+      <option value="">Tipo de Usuario</option>
+      <option>Administrador</option>
+      <option>Vendedor</option>
+      <option>Cliente</option>
+    </select>
+    <input type="hidden" id="uId">
+    <div class="actions">
+      <button type="submit" class="btn-primary">Guardar</button>
+      <button type="button" id="btnULimpiar">Limpiar</button>
+    </div>
+  </form>
+
+  <h2 class="section-title">Listado de Usuarios</h2>
+  <table class="table" id="tablaUsuarios">
+    <thead>
+      <tr><th>ID</th><th>RUN</th><th>Nombre</th><th>Correo</th><th>Tipo</th><th>Acciones</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+<script src="../app.js"></script>
+</body>
+</html>

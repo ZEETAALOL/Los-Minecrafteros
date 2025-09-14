@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level-Up Gamer</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+    nav a, .btn-primary, .cat-card {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<body>
+<header class="site-header">
+  <div class="brand">
+    <span class="logo"></span>
+    <a class="brand-name" href="index.html">Level-Up Gamer</a>
+  </div>
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="productos.html">Productos</a>
+    <a href="registro.html">Registro</a>
+    <a href="login.html">Login</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="blog.html">Blog</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="admin/index.html" class="admin-link">Admin</a>
+  </nav>
+  <div class="cart-badge" id="carritoBadge">🛒<span id="cartCount">0</span></div>
+</header>
+
+<section id="banner" class="banner">
+  <img src="img/banner-gamer.jpg" alt="Banner Gamer con luces RGB">
+  <div class="banner-text">
+    <h1>¡Bienvenido a la tienda #1 para gamers en Chile!</h1>
+    <p>Consolas, periféricos, ropa y más — con estilo y velocidad.</p>
+    <a class="btn-primary" href="productos.html">Ver catálogo</a>
+  </div>
+</section>
+
+<section class="categories section">
+  <h2 class="section-title">Categorías</h2>
+  <div class="grid cats">
+    <a class="cat-card" href="productos.html#Consolas">🎮 Consolas</a>
+    <a class="cat-card" href="productos.html#Accesorios">🖱️ Accesorios</a>
+    <a class="cat-card" href="productos.html#Juegos de Mesa">🕹️ Juegos de Mesa</a>
+    <a class="cat-card" href="productos.html#Sillas Gamers">🪑 Sillas Gamer</a>
+  </div>
+</section>
+
+<section class="section featured">
+  <h2 class="section-title">Destacados</h2>
+  <div id="destacados" class="grid cards"></div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>Level-Up Gamer</h4>
+      <p>¡Explora, juega y gana con nosotros!</p>
+    </div>
+    <div>
+      <h4>Links</h4>
+      <ul>
+        <li><a href="productos.html">Catálogo</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Síguenos</h4>
+      <p><a href="#">Instagram</a> · <a href="#">Facebook</a> · <a href="#">X</a></p>
+    </div>
+  </div>
+  <p class="copy">© 2025 Level-Up Gamer. Todos los derechos reservados.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

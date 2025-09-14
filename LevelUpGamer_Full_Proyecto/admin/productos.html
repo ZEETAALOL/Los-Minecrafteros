@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Productos · Level-Up Gamer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="admin">
+<header class="admin-header">
+  <h1>Productos</h1>
+  <nav>
+    <a href="index.html">Admin Home</a>
+    <a href="usuarios.html">Usuarios</a>
+    <a href="../index.html">Tienda</a>
+  </nav>
+</header>
+<main class="section">
+  <form id="formProducto" class="form-card">
+    <h2>Nuevo / Editar Producto</h2>
+    <input id="pCodigo" placeholder="Código (min 3)" required>
+    <input id="pNombre" placeholder="Nombre (max 100)" required maxlength="100">
+    <textarea id="pDesc" placeholder="Descripción (opcional, max 500)" maxlength="500"></textarea>
+    <input id="pPrecio" type="number" placeholder="Precio (min 0)" min="0" step="0.01" required>
+    <input id="pStock" type="number" placeholder="Stock (entero, min 0)" min="0" step="1" required>
+    <input id="pStockCritico" type="number" placeholder="Stock crítico (opcional, min 0)" min="0" step="1">
+    <select id="pCategoria" required>
+      <option value="">Categoría</option>
+      <option>Consolas</option>
+      <option>Accesorios</option>
+      <option>Juegos de Mesa</option>
+      <option>Sillas Gamers</option>
+    </select>
+    <input id="pImagen" placeholder="URL de imagen (opcional)">
+    <input type="hidden" id="pId">
+    <div class="actions">
+      <button type="submit" class="btn-primary">Guardar</button>
+      <button type="button" id="btnLimpiar">Limpiar</button>
+    </div>
+  </form>
+
+  <h2 class="section-title">Listado de Productos</h2>
+  <table class="table" id="tablaProductos">
+    <thead>
+      <tr><th>ID</th><th>Código</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Categoría</th><th>Img</th><th>Acciones</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+<script src="../app.js"></script>
+</body>
+</html>
