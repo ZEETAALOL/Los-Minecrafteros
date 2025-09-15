@@ -1,4 +1,3 @@
-
 // ===== Seed & Utilities =====
 const LS_KEYS = {
   CART: "carrito",
@@ -7,20 +6,30 @@ const LS_KEYS = {
   SESSION: "sessionUser"
 };
 
+// Formato de moneda CLP
+const CLP = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' });
+
 function seedData(){
   if(!localStorage.getItem(LS_KEYS.PRODUCTS)){
     const seedProducts = [
-      { id: 1, codigo:"CO001", nombre: "PlayStation 5", descripcion:"Consola next-gen", precio: 549990, stock: 5, stockCritico: 1, categoria:"Consolas", img: "img/ps5.jpg" },
-      { id: 2, codigo:"MS001", nombre: "Mouse Logitech G502", descripcion:"Sensor HERO", precio: 49990, stock: 25, stockCritico: 5, categoria:"Accesorios", img: "img/mouse.jpg" },
-      { id: 3, codigo:"SG001", nombre: "Silla Secretlab Titan", descripcion:"Ergonómica gamer", precio: 349990, stock: 3, stockCritico: 1, categoria:"Sillas Gamers", img: "img/silla.jpg" }
+      { id: 1,  codigo:"JM001", nombre: "Catan", descripcion:"Juego de estrategia y comercio", precio: 29990,  stock: 12, stockCritico: 3, categoria:"Juegos de Mesa", img: "img/catan.jpg" },
+      { id: 2,  codigo:"JM002", nombre: "Carcassonne", descripcion:"Colocación de losetas medieval", precio: 24990,  stock: 10, stockCritico: 2, categoria:"Juegos de Mesa", img: "img/carcassonne.jpg" },
+      { id: 3,  codigo:"AC001", nombre: "Controlador Inalámbrico Xbox Series X", descripcion:"Ergonómico, compatible Xbox y PC", precio: 59990,  stock: 20, stockCritico: 4, categoria:"Accesorios", img: "img/xbox-controller.jpg" },
+      { id: 4,  codigo:"AC002", nombre: "Auriculares Gamer HyperX Cloud II", descripcion:"Sonido envolvente 7.1, mic desmontable", precio: 74990,  stock: 15, stockCritico: 3, categoria:"Accesorios", img: "img/hyperx-cloud2.jpg" },
+      { id: 5,  codigo:"CO001", nombre: "PlayStation 5", descripcion:"Consola next-gen", precio: 549990, stock: 5,  stockCritico: 1, categoria:"Consolas", img: "img/ps5.jpg" },
+      { id: 6,  codigo:"PC001", nombre: "PC Gamer ASUS ROG Strix", descripcion:"Alto rendimiento para gaming", precio: 1399990, stock: 4, stockCritico: 1, categoria:"PC Gamer", img: "img/asus-rog-strix.jpg" },
+      { id: 7,  codigo:"SG001", nombre: "Silla Gamer Secretlab Titan", descripcion:"Ergonómica gamer", precio: 349990, stock: 3,  stockCritico: 1, categoria:"Sillas Gamers", img: "img/silla.jpg" },
+      { id: 8,  codigo:"AC003", nombre: "Mouse Gamer Logitech G502 HERO", descripcion:"Sensor HERO, botones programables", precio: 49990,  stock: 25, stockCritico: 5, categoria:"Accesorios", img: "img/logitech-g502-hero.jpg" },
+      { id: 9,  codigo:"AC004", nombre: "Mousepad Razer Goliathus Extended Chroma", descripcion:"RGB, superficie amplia y uniforme", precio: 39990,  stock: 18, stockCritico: 4, categoria:"Accesorios", img: "img/razer-goliathus.jpg" },
+      { id: 10, codigo:"RG001", nombre: "Polera Gamer Personalizada 'Level-Up'", descripcion:"Personalizable con gamer tag", precio: 15990,  stock: 30, stockCritico: 8, categoria:"Ropa Gamer", img: "img/polera-levelup.jpg" }
     ];
     localStorage.setItem(LS_KEYS.PRODUCTS, JSON.stringify(seedProducts));
   }
   if(!localStorage.getItem(LS_KEYS.USERS)){
     const seedUsers = [
-      { id:1, run:"19011022K", nombre:"Admin", apellidos:"Demo", correo:"admin@gmail.com", pass:"1234", tipo:"Administrador", direccion:"Base 123" },
-      { id:2, run:"14123456-0".replace("-",""), nombre:"Vendedor", apellidos:"Demo", correo:"vendedor@gmail.com", pass:"1234", tipo:"Vendedor", direccion:"Local 321" },
-      { id:3, run:"13000000-9".replace("-",""), nombre:"Cliente", apellidos:"Demo", correo:"cliente@gmail.com", pass:"1234", tipo:"Cliente", direccion:"Casa 456" }
+      { id:1, run:"19011022K", nombre:"Admin",    apellidos:"Demo", correo:"admin@gmail.com",    pass:"1234", tipo:"Administrador", direccion:"Base 123" },
+      { id:2, run:"141234560", nombre:"Vendedor", apellidos:"Demo", correo:"vendedor@gmail.com", pass:"1234", tipo:"Vendedor",     direccion:"Local 321" },
+      { id:3, run:"130000009", nombre:"Cliente",  apellidos:"Demo", correo:"cliente@gmail.com",  pass:"1234", tipo:"Cliente",      direccion:"Casa 456" }
     ];
     localStorage.setItem(LS_KEYS.USERS, JSON.stringify(seedUsers));
   }
@@ -86,9 +95,9 @@ function cargarRegiones(regionSelId, comunaSelId){
       const el = document.createElement("div");
       el.className = "card";
       el.innerHTML = `
-        <img src="${p.img || 'img/banner-gamer.jpg'}" alt="${p.nombre}">
+        <img loading="lazy" src="${p.img || 'img/banner-gamer.jpg'}" alt="${p.nombre}">
         <h3>${p.nombre}</h3>
-        <p>$${p.precio.toLocaleString()}</p>
+        <p>${CLP.format(p.precio)}</p>
         <button class="btn-primary" data-add="${p.id}">Añadir al carrito</button>
       `;
       dest.appendChild(el);
@@ -104,6 +113,18 @@ function cargarRegiones(regionSelId, comunaSelId){
   if(cont){
     const input = document.getElementById("busqueda");
     const cat = document.getElementById("filtroCategoria");
+
+    // Leer categoría desde #hash (ej: productos.html#Accesorios)
+    const hashCat = decodeURIComponent((location.hash || "").slice(1));
+    if (hashCat && cat) {
+      Array.from(cat.options).forEach(o => { if (o.value === hashCat) cat.value = hashCat; });
+    }
+    window.addEventListener("hashchange", () => {
+      const hc = decodeURIComponent((location.hash || "").slice(1));
+      if(hc && cat){ cat.value = hc; }
+      draw();
+    });
+
     function draw(){
       cont.innerHTML = "";
       let list = getProducts();
@@ -116,9 +137,9 @@ function cargarRegiones(regionSelId, comunaSelId){
         d.className = "card";
         const stockWarn = (p.stockCritico!=null && p.stock<=p.stockCritico) ? `<span class="hint">⚠️ Stock crítico</span>` : "";
         d.innerHTML = `
-          <img src="${p.img || 'img/banner-gamer.jpg'}" alt="${p.nombre}">
+          <img loading="lazy" src="${p.img || 'img/banner-gamer.jpg'}" alt="${p.nombre}">
           <h3>${p.nombre}</h3>
-          <p>$${p.precio.toLocaleString()} · Stock: ${p.stock} ${stockWarn}</p>
+          <p>${CLP.format(p.precio)} · Stock: ${p.stock} ${stockWarn}</p>
           <button class="btn-primary" data-add="${p.id}">Añadir al carrito</button>
         `;
         cont.appendChild(d);
@@ -243,7 +264,7 @@ function requireRole(roles){
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${p.id}</td><td>${p.codigo}</td><td>${p.nombre}</td>
-        <td>$${p.precio.toLocaleString()}</td>
+        <td>${CLP.format(p.precio)}</td>
         <td>${p.stock}${(p.stockCritico!=null && p.stock<=p.stockCritico)?' ⚠️':''}</td>
         <td>${p.categoria}</td>
         <td>${p.img?'<a href="'+p.img+'" target="_blank">Ver</a>':'-'}</td>
@@ -281,7 +302,12 @@ function requireRole(roles){
     if(!categoria){ alert("Selecciona categoría"); return; }
 
     const list = getProducts();
-    if(pid){
+    const isEdit = Boolean(pid);
+    // Evitar duplicados por código (case-insensitive)
+    const existsCodigo = list.some(x => x.codigo.toLowerCase() === codigo.toLowerCase() && (!isEdit || x.id !== parseInt(pid,10)));
+    if (existsCodigo) { alert("Código de producto ya existe"); return; }
+
+    if(isEdit){
       const id = parseInt(pid,10);
       const idx = list.findIndex(x=>x.id===id);
       if(idx>=0){
